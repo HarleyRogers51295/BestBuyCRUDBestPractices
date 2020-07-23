@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30204.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BestBuyCRUDBestPracticeConsoleUI", "BestBuyCRUDBestPracticeConsoleUI\BestBuyCRUDBestPracticeConsoleUI.csproj", "{28F8A189-4EC9-418B-A2DE-88FA3E4EF6A2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{28F8A189-4EC9-418B-A2DE-88FA3E4EF6A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28F8A189-4EC9-418B-A2DE-88FA3E4EF6A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28F8A189-4EC9-418B-A2DE-88FA3E4EF6A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28F8A189-4EC9-418B-A2DE-88FA3E4EF6A2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A6A96C73-10F4-4E5D-A2BC-160F2AECA2BC}
+	EndGlobalSection
+EndGlobal
