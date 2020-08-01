@@ -31,7 +31,10 @@ namespace BestBuyCRUDBestPracticeConsoleUI
             new { departmentName = newDepartmentName }); //anonymous type. creates whatever type we want
 
         }
+        public void DeleteDepartment(int DepID)
+        {
+            _connection.Execute("DELETE FROM Departments WHERE DepartmentID = @ID;", new { ID = DepID });
+        }
 
-        
     }
 }

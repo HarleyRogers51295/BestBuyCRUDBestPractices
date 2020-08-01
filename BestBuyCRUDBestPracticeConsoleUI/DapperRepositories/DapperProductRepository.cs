@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -28,10 +29,14 @@ namespace BestBuyCRUDBestPracticeConsoleUI
         {
             _connection.Execute($"UPDATE Products SET {column} = '{value}' WHERE ProductID = {id}");
         }
-        public void DeleteProduct(int id)
+        public void DeleteProduct(int productID)
         {
-            _connection.Execute($"DELETE FROM Products WHERE ProductID = {id}");
+            _connection.Execute("DELETE FROM Products WHERE ProductID = @ID;", new { ID = productID });
+            _connection.Execute("DELETE FROM Sales WHERE ProductID = @ID;", new { ID = productID });
+            _connection.Execute("DELETE FROM Reviews WHERE ProductID = @ID;", new { ID = productID });
         }
+
+
        
     }
 }
