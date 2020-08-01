@@ -14,6 +14,7 @@ namespace BestBuyCRUDBestPracticeConsoleUI
 
         static void Main(string[] args)
         {
+            //This is the connection to the Database
             #region Configeration
             var config = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -27,6 +28,7 @@ namespace BestBuyCRUDBestPracticeConsoleUI
             IDbConnection conn = new MySqlConnection(connString);//this is the connection to MySQL database
             #endregion
 
+            //An array for the choices for the different Tables in the DB
             int userChoice;
             string[] choice = { "Categories", "Departments", "Employees", "Products", "Reviews", "Sales", "Exit" };
             #region ChoiceNumbers
@@ -38,34 +40,38 @@ namespace BestBuyCRUDBestPracticeConsoleUI
             choice[5] = "6";
             choice[6] = "7";
             #endregion
-            do
+            do//a do/while loop create a user choice driven system
             {
                 Console.WriteLine("Choose your Table to view.");
                 Console.WriteLine("Categories(1), Departments(2), Employees(3), Products(4), Reviews(5), Sales(6) or Exit(7)");
                 userChoice = int.Parse(Console.ReadLine());
 
+                //switch statement to hold the function of the different tables
                 switch (userChoice)
                 {
                     case 1:
                         #region Categories
+                        //create an instance of the table
                         DapperCategoriesRepository repo1 = new DapperCategoriesRepository(conn);
 
                         Console.WriteLine("Hello user, here are the current categories!\n");
-                       
+                        //print out the current categories
                         PrintCat(repo1.GetAllCategories());
                         
+                        //another user choice array
                         int userChoice1;
                         string[] choice1 = { "Add", "Delete", "Go Back" };
 
                         choice1[0] = "1";
                         choice1[1] = "2";
                         choice1[2] = "3";
-                        do
+                        do//another  do/while loop create a user choice driven system
                         {
                             Console.WriteLine("(1)Add Category, (2)Delete Category (3)Go Back");
                             userChoice1 = int.Parse(Console.ReadLine());
                             if(userChoice1 == 1)
                             {
+                                //this is where the user will input information to add a category
                                 Console.WriteLine("What is the name of the new category?");
                                 var catName = Console.ReadLine();
                                 Console.WriteLine("Department ID (only enter the number from one of the belowe options)");
@@ -73,8 +79,10 @@ namespace BestBuyCRUDBestPracticeConsoleUI
                                 "\n5.Clearance\n6.Movies");
                                 int depID = int.Parse(Console.ReadLine());
 
+                                //inserts the user input into the DB
                                 repo1.InsertCategory(catName, depID);
                                 Console.WriteLine("Categories:");
+                                //prints out the updated categories table
                                 PrintCat(repo1.GetAllCategories());
                             }
                             else if (userChoice1 == 2)
@@ -82,8 +90,10 @@ namespace BestBuyCRUDBestPracticeConsoleUI
                                 Console.WriteLine("What is the Category ID for the category you want to remove?");
                                 int catID = int.Parse(Console.ReadLine());
                                
+                                //takes user input and deletes the category selected based of the ID
                                 repo1.DeleteCategory(catID);
                                 Console.WriteLine("Categories:");
+                                //prints out the updated categories table
                                 PrintCat(repo1.GetAllCategories());
                             }
                         } while (userChoice1 != 3);
@@ -91,19 +101,22 @@ namespace BestBuyCRUDBestPracticeConsoleUI
                         break;
                     case 2:
                         #region Departments
+                        //create an instance of the table
                         DapperDepartmentRepository repo2 = new DapperDepartmentRepository(conn);
 
                         Console.WriteLine("Hello user, here are the current departments!\n");
-                        
+
+                        //print out the current departments
                         PrintDep(repo2.GetAllDepartments());
 
+                        //another user choice array
                         int userChoice2;
                         string[] choice2 = { "Add", "Delete", "Go Back" };
 
                         choice2[0] = "1";
                         choice2[1] = "2";
                         choice2[2] = "3";
-                        do
+                        do //another  do/while loop create a user choice driven system
                         {
                             Console.WriteLine("(1)Add Department, (2)Delete Department (3)Go Back");
                             userChoice2 = int.Parse(Console.ReadLine());
@@ -112,8 +125,10 @@ namespace BestBuyCRUDBestPracticeConsoleUI
                                 Console.WriteLine("What is the name of the new department?");
                                 string depName = Console.ReadLine();
 
+                                //inserts the user input into the DB
                                 repo2.InsertDepartment(depName);
                                 Console.WriteLine("Departments");
+                                //prints out the updated depatments table
                                 PrintDep(repo2.GetAllDepartments());
 
                             }
@@ -122,8 +137,10 @@ namespace BestBuyCRUDBestPracticeConsoleUI
                                 Console.WriteLine("What is the Category ID for the category you want to remove?");
                                 int depID = int.Parse(Console.ReadLine());
 
+                                //takes user input and deletes the depatment selected based off the ID
                                 repo2.DeleteDepartment(depID);
                                 Console.WriteLine("Departments");
+                                //prints out the updated depatments table
                                 PrintDep(repo2.GetAllDepartments());
                             }
                         } while (userChoice2 != 3);
@@ -131,12 +148,15 @@ namespace BestBuyCRUDBestPracticeConsoleUI
                         break;
                     case 3:
                         #region Employees
+                        //create an instance of the table
                         DapperEmployeesRepository repo3 = new DapperEmployeesRepository(conn);
 
                         Console.WriteLine("Hello user, here are the current employees:\n");
-                       
+
+                        //print out the current employees
                         PrintEmp(repo3.GetAllEmployees());
 
+                        //another user choice array
                         int userChoice3;
                         string[] choice3 = { "Add", "Update", "Delete", "Go Back" };
 
@@ -145,7 +165,7 @@ namespace BestBuyCRUDBestPracticeConsoleUI
                         choice3[2] = "3";
                         choice3[3] = "4";
 
-                        do
+                        do //another  do/while loop create a user choice driven system
                         {
 
                             Console.WriteLine("Add an employee(1), Update an employee(2), Delete an employee(3) or Go Back(4)");
@@ -169,8 +189,10 @@ namespace BestBuyCRUDBestPracticeConsoleUI
                                 Console.Write("Date of Birth => YYYY-MM-DD: ");
                                 DateTime dateOfBirth = Convert.ToDateTime(Console.ReadLine());
 
+                                //takes user input to create a new employee in the DB
                                 repo3.CreateEmployee(firstName, middleInitial, lastName, emailAddress, phoneNumber, title, dateOfBirth);
                                 Console.WriteLine("Employees");
+                                //prints out updated employee table
                                 PrintEmp(repo3.GetAllEmployees());
 
 
@@ -185,8 +207,10 @@ namespace BestBuyCRUDBestPracticeConsoleUI
                                 Console.WriteLine("What do you want to change it to?");
                                 string value = Console.ReadLine();
 
+                                //alows the user to update specific values of the employee
                                 repo3.UpdateEmployee(columnPicked, value, employeeID);
                                 Console.WriteLine("Employees");
+                                //prints out updated employees table
                                 PrintEmp(repo3.GetAllEmployees());
                             }
                             else if (userChoice3 == 3)
@@ -194,8 +218,10 @@ namespace BestBuyCRUDBestPracticeConsoleUI
                                 Console.WriteLine("Enter the Employee ID for the employee you want to remove.");
                                 var employeeID2 = int.Parse(Console.ReadLine());
 
+                                //takes user input and removes the meployee selected based of the ID
                                 repo3.DeleteEmployee(employeeID2);
                                 Console.WriteLine("Employees");
+                                //print out updated employees table
                                 PrintEmp(repo3.GetAllEmployees());
                             }
                         } while (userChoice3 != 4);
@@ -203,12 +229,15 @@ namespace BestBuyCRUDBestPracticeConsoleUI
                         break;
                     case 4:
                         #region Products
+                        //create an instance of the table
                         DapperProductRepository repo4 = new DapperProductRepository(conn);
 
                         Console.WriteLine("Hello user, here are the current products\n");
-                        
+
+                        //print out the current products
                         PrintProd(repo4.GetAllProducts());
 
+                        //another user choice array
                         int userChoice4;
                         string[] choice4 = { "Add", "Update", "Delete", "Go Back" };
 
@@ -217,7 +246,7 @@ namespace BestBuyCRUDBestPracticeConsoleUI
                         choice4[2] = "3";
                         choice4[3] = "4";
 
-                        do
+                        do //another  do/while loop create a user choice driven system
                         {
 
                             Console.WriteLine("Add a product(1), Update a product(2), Delete a product(3) or Go Back(4)");
@@ -234,8 +263,10 @@ namespace BestBuyCRUDBestPracticeConsoleUI
                                 "\n5.Home Theater\n6.Printers\n7.Music\n8.Games\n9.Services\n10.Other");
                                 int catID = int.Parse(Console.ReadLine());
 
+                                //takes user input to creat a product
                                 repo4.CreateProduct(prodName, price, catID);
                                 Console.WriteLine("Products");
+                                //prints out updated products table
                                 PrintProd(repo4.GetAllProducts());
 
 
@@ -250,8 +281,10 @@ namespace BestBuyCRUDBestPracticeConsoleUI
                                 Console.WriteLine("What do you want to change it to?");
                                 string value = Console.ReadLine();
 
+                                //takes user input to update a products information
                                 repo4.UpdateProduct(columnPicked, value, prodID);
                                 Console.WriteLine("Products");
+                                //prints out updated products table
                                 PrintProd(repo4.GetAllProducts());
                             }
                             else if (userChoice4 == 3)
@@ -259,8 +292,10 @@ namespace BestBuyCRUDBestPracticeConsoleUI
                                 Console.WriteLine("Enter the ProductID for the product you want to remove.");
                                 var prodID2 = int.Parse(Console.ReadLine());
 
+                                //takes user input to remove a product from the table based on the ID
                                 repo4.DeleteProduct(prodID2);
                                 Console.WriteLine("Products");
+                                //prints out updated products table
                                 PrintProd(repo4.GetAllProducts());
                             }
                         } while (userChoice4 != 4);
@@ -268,21 +303,26 @@ namespace BestBuyCRUDBestPracticeConsoleUI
                         break;
                     case 5:
                         #region Reviews
+                        //create an instance of the table
                         DapperReviewsRepository repo5 = new DapperReviewsRepository (conn);
 
                         Console.WriteLine("Hello user, here are all the reviews!\n");
 
+                        //print out all reviews
                         PrintReviews(repo5.GetAllReviews());
                         #endregion
                         break;
                     case 6:
                         #region Sales
+                        //create an instance of the table
                         DapperSalesRepository repo6 = new DapperSalesRepository(conn);
 
                         Console.WriteLine("Hello user, here are the current sales\n");
 
+                        //print out the current sales
                         PrintSales(repo6.GetSales());
 
+                        //another user choice array
                         int userChoice6;
                         string[] choice6 = { "Add", "Update", "Delete", "Go Back" };
 
@@ -291,7 +331,7 @@ namespace BestBuyCRUDBestPracticeConsoleUI
                         choice6[2] = "3";
                         choice6[3] = "4";
 
-                        do
+                        do //another  do/while loop create a user choice driven system
                         {
 
                             Console.WriteLine("Add a sale(1), Update a sale(2), Delete a sale(3) or Go Back(4)");
@@ -308,8 +348,10 @@ namespace BestBuyCRUDBestPracticeConsoleUI
                                 Console.Write("ProductID: ");
                                 int prodID = int.Parse(Console.ReadLine());
 
+                                //takes user input ot create a sale in the table
                                 repo6.CreateSale(pricePerUnit, quantity, date, prodID);
                                 Console.WriteLine("Sales");
+                                //prints out updated sales table
                                 PrintSales(repo6.GetSales());
 
 
@@ -324,8 +366,10 @@ namespace BestBuyCRUDBestPracticeConsoleUI
                                 Console.WriteLine("What do you want to change it to?");
                                 string value = Console.ReadLine();
 
+                                //takes user input to update a sale in the table
                                 repo6.UpdateSale(columnPicked, value, saleID);
                                 Console.WriteLine("Sales");
+                                //prints out updated sales table
                                 PrintSales(repo6.GetSales());
                             }
                             else if (userChoice6 == 3)
@@ -333,8 +377,10 @@ namespace BestBuyCRUDBestPracticeConsoleUI
                                 Console.WriteLine("Enter the SalesID for the sale you want to remove.");
                                 var saleID2 = int.Parse(Console.ReadLine());
 
+                                //takes user input to delete a sale from the table based on the ID
                                 repo6.DeleteSale(saleID2);
                                 Console.WriteLine("Sales");
+                                //prints out updated sales table
                                 PrintSales(repo6.GetSales());
                             }
                         } while (userChoice6 != 4);
@@ -342,12 +388,13 @@ namespace BestBuyCRUDBestPracticeConsoleUI
                         break;
 
 
-                }
+                }//closes out the loop and terminates the system.
                 } while (userChoice != 7) ;
             Console.WriteLine("Have a wonderful day!");
         }
 
         #region PrintMethods
+        //these are the print ethods used in the above code
         private static void PrintCat(IEnumerable<Categories> depos)
         {
             foreach (var depo in depos)
